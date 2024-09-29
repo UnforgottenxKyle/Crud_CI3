@@ -5,8 +5,8 @@
         </div>
         <div>
             <ul class="nav-links">
-                <li><a href="">HOME</a></li>
-                <li><a href="">LOGOUT</a></li>
+                <li><a><?= $this->session->last_name ?></a></li>
+                <li><a href="<?= base_url('User/logout') ?>">LOGOUT</a></li>
             </ul>
         </div>
     </nav>

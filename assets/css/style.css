@@ -78,6 +78,18 @@ main .register-section p a {
 	color: aliceblue;
 }
 
+main .register-section .message {
+	background-color: red;
+	color: white;
+	text-align: center;
+	height: 25px;
+	border-radius: 7px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 4px;
+}
+
 /* end of register and login form */
 
 .home-section {

@@ -3,6 +3,9 @@
 
 
 <?php $this->load->view('template/navbar'); ?>
+<?php if (!$this->session->is_login) { ?>
+    <?php redirect('User/index') ?>
+<?php } ?>
 
 <section class="table-section">
     <table>

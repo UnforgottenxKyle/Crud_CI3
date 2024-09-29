@@ -73,8 +73,6 @@ class User extends CI_Controller
     public function login()
     {
 
-
-
         $firstname = $this->input->post('first_name');
         $lastname = $this->input->post('last_name');
         $user_id = $this->user_model->userLogin($firstname, $lastname);
@@ -84,15 +82,20 @@ class User extends CI_Controller
         $this->form_validation->set_rules('last_name', 'Lastname', 'required|min_length[2]');
 
         if ($user_id) {
+
             $result = [
                 'first_name' => $user_id['first_name'],
                 'last_name' => $user_id['last_name'],
                 'is_login' => true
             ];
 
+
             $this->session->set_userdata($result);
-            $this->session->set_flashdata('success', 'successfull');
+            $this->session->set_flashdata('success', $this->session->last_name);
             redirect(base_url('User/home'));
+        } else {
+            $this->session->set_flashdata('error', 'Wrong Credential');
+            redirect(base_url('User/index'));
         }
 
         redirect(base_url());
@@ -131,5 +134,11 @@ class User extends CI_Controller
     {
         $this->user_model->deleteData($id);
         redirect(base_url('User/home'));
+    }
+
+    public function logout()
+    {
+        $this->session->sess_destroy();
+        redirect(base_url('User/index'));
     }
 }
