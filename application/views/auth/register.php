@@ -12,9 +12,14 @@
             <label>LAST NAME </label><br>
             <input type="text" name="last_name" placeholder="Enter your last name" value="<?= set_value('last_name') ?>" /><br>
             <label>GENDER </label><br>
-            <input type=" text" name="gender" placeholder="Enter your gender" value="<?= set_value('gender') ?>" /><br>
+            <input type="text" name="gender" placeholder="Enter your gender" value="<?= set_value('gender') ?>" /><br>
             <label>EMAIL </label><br>
-            <input type=" text" name="email" placeholder="Enter your email" value="<?= set_value('email') ?>" /><br>
+            <input type="text" name="email" placeholder="Enter your email" value="<?= set_value('email') ?>" /><br>
+            <label>PASSWORD </label><br>
+            <input type="password" name="password" placeholder="Enter your password" value="<?= set_value('password') ?>" /><br>
+            <label>CONFIRM PASSWORD </label><br>
+            <input type="password" name="c_password" placeholder="Enter your confirm password" value="<?= set_value('c_password') ?>" /><br>
+
 
 
             <input type="submit" class="button" name="Create" value="SUBMIT">

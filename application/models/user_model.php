@@ -18,10 +18,10 @@ class User_model extends CI_Model
         }
     }
 
-    public function userLogin($firstname, $lastname)
+    public function userLogin($email, $password)
     {
-        $this->db->where('first_name', $firstname, true);
-        $this->db->where('last_name', $lastname, true);
+        $this->db->where('email', $email, true);
+        $this->db->where('password', $password, true);
         $query = $this->db->get('login');
 
         if ($query->num_rows() == 1) {
@@ -50,6 +50,7 @@ class User_model extends CI_Model
 
     public function retriveData()
     {
+        $this->db->where('is_valid', '1');
         $query = $this->db->get('login');
         return $query->result_array();
     }
@@ -69,7 +70,8 @@ class User_model extends CI_Model
 
     public function deleteData($id)
     {
+        $this->db->where('is_valid', '0');
         $this->db->where('id', $id);
-        $this->db->delete('login');
+        $this->db->update('login');
     }
 }

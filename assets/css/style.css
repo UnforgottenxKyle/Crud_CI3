@@ -100,14 +100,20 @@ main .register-section .message {
 }
 .home-section nav {
 	display: flex;
-	background-color: cadetblue;
+	background-color: #FBFAF5;
 	padding: 0 220px;
 	justify-content: center;
 	align-items: center;
+	border-bottom: 1px solid black;
 }
 .home-section nav .logo {
 	display: flex;
 	flex: 1;
+}
+
+.home-section nav .logo h1 a {
+	color: black;
+	text-decoration: none;
 }
 .home-section nav .nav-links {
 	display: flex;
@@ -123,5 +129,26 @@ main .register-section .message {
 }
 
 .table-section {
-	padding: 0 220px;
+	height: calc(100vh - 120px);
+	padding: 20px 220px;
+	background-color: #FBFAF5;
+}
+
+.table-section table tr th{
+	border: 2px solid black;
+}
+.table-section table tr td{
+
+	border: 2px solid black;
+	justify-content	: center;
+}
+
+.table-section a {
+	color: aliceblue;
+}
+
+.edit-section{
+	height: calc(100vh - 120px);
+	background-color: #FBFAF5;
+	padding: 20px 220px;
 }

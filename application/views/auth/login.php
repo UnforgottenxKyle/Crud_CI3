@@ -10,10 +10,10 @@
         <?php } ?>
         <?php echo validation_errors(); ?>
         <form action="<?= base_url() ?>User/login" method="post">
-            <label>FIRST NAME </label><br>
-            <input type="text" name="first_name" placeholder="Enter your first name" required /><br>
-            <label>LAST NAME </label><br>
-            <input type="text" name="last_name" placeholder="Enter your last name" required /><br>
+            <label>EMAIL </label><br>
+            <input type="email" name="email" placeholder="Enter your email" required /><br>
+            <label>PASSWORD </label><br>
+            <input type="password" name="password" placeholder="Enter your password" required /><br>
 
             <input type="submit" class="button" name="Create" value="SUBMIT">
             <p>Don't have an account yet? <a href="<?= base_url() ?>User/register">Register</a></p>

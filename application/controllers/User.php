@@ -22,6 +22,7 @@ class User extends CI_Controller
 
     public function home()
     {
+
         $query['datas'] = $this->user_model->retriveData();
         $this->load->view('home', $query);
     }
@@ -39,13 +40,16 @@ class User extends CI_Controller
             'last_name' => $this->input->post('last_name'),
             'gender' => $this->input->post('gender'),
             'email' => $this->input->post('email'),
+            'password' => md5($this->input->post('password')),
         ];
 
         $this->form_validation->set_error_delimiters('<div style="color: maroon; font-size:12px;">', '</div>');
-        $this->form_validation->set_rules('first_name', 'Firstname', 'required|min_length[2 ]');
+        $this->form_validation->set_rules('first_name', 'Firstname', 'required|min_length[2]');
         $this->form_validation->set_rules('last_name', 'Lastname', 'required|min_length[2]');
         $this->form_validation->set_rules('gender', 'Gender', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('password', 'Password', 'required|min_length[7]');
+        $this->form_validation->set_rules('c_password', 'Confirm Password', 'required|matches[password]');
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('auth/register');
@@ -73,18 +77,19 @@ class User extends CI_Controller
     public function login()
     {
 
-        $firstname = $this->input->post('first_name');
-        $lastname = $this->input->post('last_name');
-        $user_id = $this->user_model->userLogin($firstname, $lastname);
+        $email = $this->input->post('email');
+        $password = md5($this->input->post('password'));
+        $user_id = $this->user_model->userLogin($email, $password);
 
         $this->form_validation->set_error_delimiters('<div style="color: maroon; font-size:12px;">', '</div>');
-        $this->form_validation->set_rules('first_name', 'Firstname', 'required|min_length[2 ]');
-        $this->form_validation->set_rules('last_name', 'Lastname', 'required|min_length[2]');
+        $this->form_validation->set_rules('email', 'email', 'required|min_length[2 ]|valid_email');
+        $this->form_validation->set_rules('password', 'password', 'required|min_length[7]');
 
         if ($user_id) {
 
             $result = [
-                'first_name' => $user_id['first_name'],
+                'email' => $user_id['email'],
+                'password' => $user_id['password'],
                 'last_name' => $user_id['last_name'],
                 'is_login' => true
             ];
@@ -92,6 +97,7 @@ class User extends CI_Controller
 
             $this->session->set_userdata($result);
             $this->session->set_flashdata('success', $this->session->last_name);
+            $this->session->set_flashdata('welcome', "You're successfully login");
             redirect(base_url('User/home'));
         } else {
             $this->session->set_flashdata('error', 'Wrong Credential');
@@ -132,8 +138,12 @@ class User extends CI_Controller
 
     public function delete($id)
     {
-        $this->user_model->deleteData($id);
+        
+
+        $this->user_model->updateData($id, ['is_valid'=> 0]);
         redirect(base_url('User/home'));
+        // $this->user_model->deleteData($id);
+        // redirect(base_url('User/home'));
     }
 
     public function logout()
@@ -141,4 +151,5 @@ class User extends CI_Controller
         $this->session->sess_destroy();
         redirect(base_url('User/index'));
     }
+
 }
