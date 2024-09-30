@@ -26,12 +26,12 @@
 
 
             <?php foreach ($datas as $data) { ?>
-                <tr >
+                <tr class="text-center" style="display:flex flex-direction: column">
                     <td><?= $data['first_name']; ?></td>
                     <td><?= $data['last_name']; ?></td>
                     <td><?= $data['email']; ?></td>
                     <td><?= $data['gender']; ?></td>
-                    <td class="p-3">
+                    <td class="">
                     <a href="<?= base_url() ?>User/edit/<?= $data['id']; ?>"><button class="btn btn-success" style="width:49%">Edit</button></a>
                     <a href="<?= base_url() ?>User/delete/<?= $data['id']; ?>"><button class="btn btn-danger" style="width:49%">Delete</button></a>
                         <!-- <select name="is_valid" id="">

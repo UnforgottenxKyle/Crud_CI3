@@ -1,7 +1,7 @@
 <section class="home-section">
     <nav>
         <div class="logo">
-            <h1>CRUD PROJECT</h1>
+            <h1><a href="<?= base_url('User/home') ?>">CRUD PROJECT</a></h1>
         </div>
         <div>
             <ul class="nav-links">
@@ -11,3 +11,5 @@
         </div>
     </nav>
 </section>
+
+
