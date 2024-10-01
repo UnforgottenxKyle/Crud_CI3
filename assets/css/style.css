@@ -100,33 +100,56 @@ main .register-section .message {
 }
 .home-section nav {
 	display: flex;
-	background-color: #FBFAF5;
+	background-color: #a21925;
 	padding: 0 220px;
 	justify-content: center;
 	align-items: center;
 	border-bottom: 1px solid black;
+	color: white;
 }
 .home-section nav .logo {
 	display: flex;
 	flex: 1;
 }
-
+.home-section nav .logo h1{
+	margin: 0;
+}
 .home-section nav .logo h1 a {
-	color: black;
+	color: #FBFAF5;
 	text-decoration: none;
+	margin: 0;
 }
 .home-section nav .nav-links {
 	display: flex;
 	list-style: none;
 	gap: 25px;
+	margin: 0;
 }
-.home-section nav ul li a {
+.home-section nav .nav-links li a {
 	display: flex;
-	color: black;
+	color: #FBFAF5;
 	font-size: medium;
 	font-weight: 500;
 	text-decoration: none;
+	flex-direction: column;
 }
+.home-section nav .nav-links li a:hover{
+	color: white;
+}
+.home-section nav .nav-links li a::after{
+	content: "";
+	display: block;
+	width: auto;
+	height: 2px;
+	background: white;
+	transform: scale(0, 1);
+	transition: transform 250ms ease-in;
+}
+.home-section nav .nav-links li a:hover::after{
+	transform: scale(1, 1);
+}
+
+
 
 .table-section {
 	height: calc(100vh - 120px);
@@ -136,6 +159,7 @@ main .register-section .message {
 
 .table-section table tr th{
 	border: 2px solid black;
+	border-radius: 2px;
 }
 .table-section table tr td{
 
@@ -151,4 +175,28 @@ main .register-section .message {
 	height: calc(100vh - 120px);
 	background-color: #FBFAF5;
 	padding: 20px 220px;
+}
+
+/* Calculator Section */
+
+.calcu-section{
+	height: calc(100vh - 120px);
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr;
+	justify-items: center;
+	align-items: center;
+	background-color: #FBFAF5;
+}
+
+.calcu{
+	background-color: #fff;
+	height: 70%;
+	width: 450px;
+	padding: 10px 20px;
+	border-radius: 17px;
+}
+.calcu button{
+	width: 100%;
+	height: 100%;
 }
