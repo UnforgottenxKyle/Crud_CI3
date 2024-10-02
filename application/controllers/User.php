@@ -24,7 +24,7 @@ class User extends CI_Controller
     {
 
         $query['datas'] = $this->user_model->retriveData();
-        $this->load->view('home', $query);
+        $this->load->view('home', $query );
     }
 
     // public function insertUser(){
@@ -44,24 +44,26 @@ class User extends CI_Controller
         ];
 
         $this->form_validation->set_error_delimiters('<div style="color: maroon; font-size:12px;">', '</div>');
-        $this->form_validation->set_rules('first_name', 'Firstname', 'required|min_length[2]');
-        $this->form_validation->set_rules('last_name', 'Lastname', 'required|min_length[2]');
+        $this->form_validation->set_rules('first_name', 'Firstname', 'required|min_length[2]|is_unique[login.first_name]');
+        $this->form_validation->set_rules('last_name', 'Lastname', 'required|min_length[2]|is_unique[login.last_name]');
         $this->form_validation->set_rules('gender', 'Gender', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[login.email]');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[7]');
         $this->form_validation->set_rules('c_password', 'Confirm Password', 'required|matches[password]');
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('auth/register');
         } else {
-            $stats = $this->user_model->insertUser($data);
-            if ($stats == TRUE) {
-                $this->session->set_flashdata('message', 'Successful');
-                redirect(base_url());
-            } else {
-                $this->session->set_flashdata('error', 'ERROR!');
-                redirect(base_url('User/register'));
-            }
+                
+                $stats = $this->user_model->insertUser($data);
+                if ($stats == TRUE) {
+                    $this->session->set_flashdata('message', 'Successfully Registered');
+                    redirect(base_url());
+                } else {
+                    $this->session->set_flashdata('error', 'ERROR!');
+                    redirect(base_url('User/register'));
+                } 
+            
         }
 
         // $this->user_model->
@@ -116,30 +118,78 @@ class User extends CI_Controller
         $data['data'] = $this->user_model->getData($id);
         $this->load->view('edit', $data);
     }
-    public function update($id)
-    {
+    
+public function update($id)
+{
+    $data = [
+        'first_name' => $this->input->post('first_name'),
+        'last_name' => $this->input->post('last_name'),
+        'gender' => $this->input->post('gender'),
+        'email' => $this->input->post('email'),
+    ];
 
-        $data = [
-            'first_name' => $this->input->post('first_name'),
-            'last_name' => $this->input->post('last_name'),
-            'gender' => $this->input->post('gender'),
-            'email' => $this->input->post('email'),
-        ];
+    $this->form_validation->set_error_delimiters('<div style="color: maroon; font-size:12px;">', '</div>');
+    $this->form_validation->set_rules('first_name', 'Firstname', 'required|min_length[2]');
+    $this->form_validation->set_rules('last_name', 'Lastname', 'required|min_length[2]');
+    $this->form_validation->set_rules('gender', 'Gender', 'required');
+    $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 
-        $this->form_validation->set_error_delimiters('<div style="color: maroon; font-size:12px;">', '</div>');
-        $this->form_validation->set_rules('first_name', 'Firstname', 'required|min_length[2 ]');
-        $this->form_validation->set_rules('last_name', 'Lastname', 'required|min_length[2]');
-        $this->form_validation->set_rules('gender', 'Gender', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+    // Check if email already exists
+    $existing_user = $this->user_model->getUserByEmail($data['email']);
+    if ($existing_user && $existing_user->id != $id) {
+        $this->form_validation->set_rules('email', 'Email', 'callback_email_exists');
+    }
 
+    if ($this->form_validation->run() == FALSE) {
+        $this->session->set_flashdata('update_error', 'Error updating: ' . validation_errors());
+        redirect(base_url('User/edit/'.$id));
+    } else {
+        $this->session->set_flashdata('updated', 'Successfully updated');
         $this->user_model->updateData($id, $data);
         redirect(base_url('User/home'));
     }
+}
+
+public function email_exists($email)
+{
+    $this->form_validation->set_message('email_exists', 'The {field} field must contain a unique value.');
+    return FALSE;
+}
+    // public function update($id)
+    // {
+
+    //     $data = [
+    //         'first_name' => $this->input->post('first_name'),
+    //         'last_name' => $this->input->post('last_name'),
+    //         'gender' => $this->input->post('gender'),
+    //         'email' => $this->input->post('email'),
+    //     ];
+
+    //     $this->form_validation->set_error_delimiters('<div style="color: maroon; font-size:12px;">', '</div>');
+    //     $this->form_validation->set_rules('first_name', 'Firstname', 'required|min_length[2]');
+    //     $this->form_validation->set_rules('last_name', 'Lastname', 'required|min_length[2]');
+    //     $this->form_validation->set_rules('gender', 'Gender', 'required');
+    //     $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[login.email]');
+
+
+    //     if ($this->form_validation->run() == FALSE) {
+    //         $this->session->set_flashdata('update_error', 'Error updating');
+    //         // $this->load->view('home');
+    //         // redirect(base_url('User/edit/'.$id));     
+    //     } else {
+    //         $this->session->set_flashdata('updated', 'Successfully updated');
+    //         $this->user_model->updateData($id, $data);
+    //         redirect(base_url('User/home'));
+    //     }
+    //     // $this->user_model->updateData($id, $data);
+    //     // $this->session->set_flashdata('updated', "Successfully updated");
+    //     // $this->session->set_flashdata('update_error', "Error updating");   
+    // }
 
     public function delete($id)
     {
         
-
+        $this->session->set_flashdata('deleted', "Successfully deleted");
         $this->user_model->updateData($id, ['is_valid'=> 0]);
         redirect(base_url('User/home'));
         // $this->user_model->deleteData($id);

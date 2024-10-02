@@ -74,4 +74,10 @@ class User_model extends CI_Model
         $this->db->where('id', $id);
         $this->db->update('login');
     }
+    public function getUserByEmail($email) {
+        $this->db->where('email', $email);
+        $query = $this->db->get('login'); // Assuming your table name is 'users'
+        return $query->row(); // Return a single row
+    }
+
 }

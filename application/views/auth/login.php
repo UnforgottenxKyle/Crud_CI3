@@ -5,6 +5,11 @@
 
     <section class="register-section">
         <h1>LOGIN HERE</h1>
+        <?php if($this->session->flashdata('message')):?>
+            <div class="message" style="background: green;">
+                <?= $this->session->flashdata('message'); ?>
+            </div>
+        <?php endif?>
         <?php if ($this->session->flashdata('error')) { ?>
             <?= '<p class="message">' . $this->session->flashdata('error') . '</p>' ?>
         <?php } ?>
@@ -16,7 +21,7 @@
             <input type="password" name="password" placeholder="Enter your password" required /><br>
 
             <input type="submit" class="button" name="Create" value="SUBMIT">
-            <p>Don't have an account yet? <a href="<?= base_url() ?>User/register">Register</a></p>
+            <p>Don't have an account yet? <a href="<?= base_url() ?>User/register">REGISTER</a></p>
         </form>
     </section>
 </main>

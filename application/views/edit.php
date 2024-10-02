@@ -4,8 +4,15 @@
 
 
 <?php $this->load->view('template/navbar'); ?>
+
     <section class="edit-section">
+        
         <form action="<?= base_url() ?>User/update/<?= $data['id'] ?>" method="post">
+        <?php if ($this->session->flashdata('update_error')) : ?>
+            <div class="alert alert-danger" role="alert">
+                <?= $this->session->flashdata('update_error') ?>
+            </div>
+        <?php endif  ?>
         <label class="form-label">FIRSTNAME</label>
         <input type="text" name="first_name" placeholder="Enter your new firstname" value="<?= $data['first_name']?>" class="form-control"><br>
         <label class="form-label">LASTNAME</label>

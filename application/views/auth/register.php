@@ -5,6 +5,11 @@
 
     <section class="register-section">
         <h1>REGISTER!</h1>
+        <?php if($this->session->flashdata('existing')):?>
+            <div style="color: maroon; font-size:12px;">
+                <?= $this->session->flashdata('existing') ?>
+            </div>
+        <?php endif?>
         <?php echo validation_errors(); ?>
         <form action="<?= base_url() ?>User/create" method="post">
             <label>FIRST NAME </label><br>
